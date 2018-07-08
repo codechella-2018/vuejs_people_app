@@ -5,7 +5,8 @@ var HomePage = {
   data: function() {
     return {
       people: [],
-      newPerson: {bioVisible: true}
+      newPerson: {bioVisible: true},
+      errors: []
     };
   },
   created: function() {
@@ -24,11 +25,17 @@ var HomePage = {
   			this.people.push(response.data);
   			this.newPerson.name = "";
   			this.newPerson.bio = ""
+  		}.bind(this)).catch(function(error){
+  			// console.log(error.response.data.errors);
+  			this.errors = error.response.data.errors;
   		}.bind(this));
   	},
   	deletePerson: function(person) {
-  		var index = this.people.indexOf(person);
-  		this.people.splice(index, 1);
+  		axios.delete("/api/people/" + person.id).then(function(response){
+  			console.log(response.data.message);
+  			var index = this.people.indexOf(person);
+  			this.people.splice(index, 1);
+  		}.bind(this));
   	},
   	toggleBio: function(person) {
   		// changes bioVisible to opposite boolean

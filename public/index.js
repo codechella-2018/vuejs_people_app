@@ -4,27 +4,16 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      people: [
-      	{
-      		name: "Heidi",
-      		bio: "Adores llamas",
-      		bioVisible: true
-      	},
-      	{
-      		name: "Tonja",
-      		bio: "Likes pina coladas and getting caught in the rain",
-      		bioVisible: true
-      	},
-      	{
-      		name: "Gerry",
-      		bio: "Makes lemonade out of lemons",
-      		bioVisible: true
-      	}
-      ],
+      people: [],
       newPerson: {bioVisible: true}
     };
   },
-  created: function() {},
+  created: function() {
+  	axios.get("/api/people.json").then(function(response) {
+  		this.people = response.data;
+  		console.log(this.people);
+  	}.bind(this));
+  },
   methods: {
   	addPerson: function() {
   		this.people.push(this.newPerson);

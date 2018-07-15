@@ -25,9 +25,13 @@
     <h4>Total number of people: {{ people.length }}</h4>
 
     <div>
-      Search by name: <input v-model="nameFilter">
+      Search by name: <input v-model="nameFilter" list="names">
       Search by bio: <input v-model="bioFilter">
     </div>
+
+    <datalist id="names">
+      <option v-for="person in people">{{ person.name }}</option>
+    </datalist>
 
     <div v-for="person in people" v-if="isValidPerson(person)">
     	<h2 v-on:click="toggleBio(person)">{{ person.name }}</h2>

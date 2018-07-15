@@ -6,7 +6,8 @@ var HomePage = {
     return {
       people: [],
       newPerson: {bioVisible: true},
-      errors: []
+      errors: [],
+      nameFilter: ''
     };
   },
   created: function() {
@@ -40,7 +41,10 @@ var HomePage = {
   	toggleBio: function(person) {
   		// changes bioVisible to opposite boolean
   		person.bioVisible = !person.bioVisible;
-  	}
+  	},
+    isValidPerson: function(person) {
+      return person.name.includes(this.nameFilter);
+    }
   },
   computed: {}
 };

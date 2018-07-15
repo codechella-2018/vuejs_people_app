@@ -24,7 +24,11 @@
     <h1>Interesting People</h1>
     <h4>Total number of people: {{ people.length }}</h4>
 
-    <div v-for="person in people">
+    <div>
+      Search by name: <input v-model="nameFilter">
+    </div>
+
+    <div v-for="person in people" v-if="isValidPerson(person)">
     	<h2 v-on:click="toggleBio(person)">{{ person.name }}</h2>
     	<h3 v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</h3>
     	<button v-on:click="deletePerson(person)">Delete</button>

@@ -8,7 +8,8 @@ var HomePage = {
       newPerson: {bioVisible: true},
       errors: [],
       nameFilter: '',
-      bioFilter: ''
+      bioFilter: '',
+      sortAttribute: 'name'
     };
   },
   created: function() {
@@ -47,9 +48,20 @@ var HomePage = {
       var validName = person.name.toLowerCase().includes(this.nameFilter.toLowerCase());
       var validBio = person.bio.toLowerCase().includes(this.bioFilter.toLowerCase());
       return validName && validBio;
+    },
+    setSortAttribute: function(attribute) {
+      this.sortAttribute = attribute;
     }
   },
-  computed: {}
+  computed: {
+    sortedPeople: function() {
+      return this.people.sort(function(person1, person2){
+        var lowerName1 = person1[this.sortAttribute].toLowerCase();
+        var lowerName2 = person2[this.sortAttribute].toLowerCase();
+        return lowerName1.localeCompare(lowerName2);
+      }.bind(this));
+    }
+  }
 };
 
 var router = new VueRouter({

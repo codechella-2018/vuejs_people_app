@@ -23,21 +23,30 @@
 
     <h1>Interesting People</h1>
     <h4>Total number of people: {{ people.length }}</h4>
-
+    
+    <!-- filtering -->
     <div>
       Search by name: <input v-model="nameFilter" list="names">
       Search by bio: <input v-model="bioFilter">
+    </div>
+    
+    <!-- sorting -->
+    <div>
+      <button v-on:click="setSortAttribute('name')">Sort by name</button>
+      <button v-on:click="setSortAttribute('bio')">Sort by bio</button>
     </div>
 
     <datalist id="names">
       <option v-for="person in people">{{ person.name }}</option>
     </datalist>
-
-    <div v-for="person in people" v-if="isValidPerson(person)">
-    	<h2 v-on:click="toggleBio(person)">{{ person.name }}</h2>
-    	<h3 v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</h3>
-    	<button v-on:click="deletePerson(person)">Delete</button>
-    </div>
+    
+    <transition-group name="slide-left">
+      <div v-for="person in sortedPeople" v-bind:key="person.id" v-if="isValidPerson(person)">
+      	<h2 v-on:click="toggleBio(person)">{{ person.name }}</h2>
+      	<h3 v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</h3>
+      	<button v-on:click="deletePerson(person)">Delete</button>
+      </div>
+    </transition-group>
 
     <h2>Add a new person</h2>
     

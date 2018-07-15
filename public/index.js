@@ -7,7 +7,8 @@ var HomePage = {
       people: [],
       newPerson: {bioVisible: true},
       errors: [],
-      nameFilter: ''
+      nameFilter: '',
+      bioFilter: ''
     };
   },
   created: function() {
@@ -43,7 +44,9 @@ var HomePage = {
   		person.bioVisible = !person.bioVisible;
   	},
     isValidPerson: function(person) {
-      return person.name.includes(this.nameFilter);
+      var validName = person.name.toLowerCase().includes(this.nameFilter.toLowerCase());
+      var validBio = person.bio.toLowerCase().includes(this.bioFilter.toLowerCase());
+      return validName && validBio;
     }
   },
   computed: {}

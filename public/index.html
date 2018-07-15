@@ -26,6 +26,7 @@
 
     <div>
       Search by name: <input v-model="nameFilter">
+      Search by bio: <input v-model="bioFilter">
     </div>
 
     <div v-for="person in people" v-if="isValidPerson(person)">

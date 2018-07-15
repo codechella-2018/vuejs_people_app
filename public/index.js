@@ -9,7 +9,8 @@ var HomePage = {
       errors: [],
       nameFilter: '',
       bioFilter: '',
-      sortAttribute: 'name'
+      sortAttribute: 'name',
+      sortAscending: true
     };
   },
   created: function() {
@@ -50,7 +51,12 @@ var HomePage = {
       return validName && validBio;
     },
     setSortAttribute: function(attribute) {
-      this.sortAttribute = attribute;
+      if(this.sortAttribute === attribute){
+        this.sortAscending = !this.sortAscending;
+      } else {
+        this.sortAttribute = attribute;
+        this.sortAscending = true;
+      }
     }
   },
   computed: {
@@ -58,7 +64,11 @@ var HomePage = {
       return this.people.sort(function(person1, person2){
         var lowerName1 = person1[this.sortAttribute].toLowerCase();
         var lowerName2 = person2[this.sortAttribute].toLowerCase();
-        return lowerName1.localeCompare(lowerName2);
+        if (this.sortAscending) {
+          return lowerName1.localeCompare(lowerName2);
+        } else {
+          return lowerName2.localeCompare(lowerName1);
+        }
       }.bind(this));
     }
   }
